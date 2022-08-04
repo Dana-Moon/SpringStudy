@@ -1,0 +1,39 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.2'
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+//첫번째 자리 : 메이저 업데이트, 두번째 자리 : 마이너 업데이트, 세번째 자리 : fix버젼(오탈자, 이미지 변경)
+version = '0.0.1-SNAPSHOT'
+//자바 버젼
+sourceCompatibility = '17'
+
+//디펜던시를 다운 받는 위치
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /* 7/29
+    롬복추가*/
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    /* 7/28
+    타임리프 : springboot(백엔드)와 html을 '유연하게' 연결해주는 템플릿
+    starter web에 tomcat이 포함되어 있음
+    tomcat : spring 프로젝트를 웹하고 연결해주는 도구 */
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    //tomcat
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //아랫줄 추가
+//    implementation 'org.springframework.boot:spring-boot-devtools-tests:'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+//테스트 모듈에 관한 정보
+//원래 엄청 많은 줄에 설명해야 하는데, 스프링이라서 이렇게 간단하게 표기되는 것. 위에 디펜던시 역시 그럼.
+tasks.named('test') {
+    useJUnitPlatform()
+}

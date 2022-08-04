@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="favicon" href="/static/img/ico/favicon.ico">-->
+    <title>Title</title>
+</head>
+<body>
+    hello world
+    <a href="/hello">hello</a>
+    <a href="www.naver.com">naver</a>
+    <hr>
+    <!----->
+    <p th:text="${msg}"></p>
+    <hr>
+    Moon
+    <hr>
+    <h1>회원가입</h1>
+<!--    톰캣한테 /account를 보내준다. 이것 때문에 웹페이지 이름 끝에 /account가 붙는다. -->
+    <form method="POST" action="/account">
+        <input type="text" name="id1" th:value="${id2}"/>
+        <input type="submit" value="Click"/>
+    </form>
+</body>
+</html>
