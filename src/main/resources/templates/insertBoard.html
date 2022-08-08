@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>새 글 등록</title>
+</head>
+<body th:align="center">
+  <h1>게시글 등록</h1>
+<!--  [클라이언트] html의 form태그를 통한 submit액션을 실행하면 [서버]로 전달되는 mapping주소 th:action="insertBoard"
+      method="post" // get/post 방식으로 데이터 전달 명시함. 꼭 명시해주는 것이 좋다.
+      [서버] 컨트롤러에서 get 방식 받는 것과 post 방식으로 받는 것을 구분할 수 있습니다-->
+  <form th:action="insertBoard" method="post">
+    <table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0">
+      <tr>
+        <td bgcolor="#ffb6c1" th:text="분류" width="80"></td>
+        <td>
+          <select name="cate">
+            <option value="공지">공지</option>
+            <option value="향수">향수</option>
+            <option value="잡담">잡담</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td bgcolor="#ffb6c1" th:text="제목"></td>
+<!--        [클라이언트]name="title"은 [서버]에서 데이터 매개변수를 받기 위한 변수명(key)-->
+        <td><input name="title" type="text" size="50"></td>
+      </tr>
+      <tr>
+        <td bgcolor="#ffb6c1" th:text="작성자"></td>
+        <td><input name="writer" type="text" size="10"></td>
+      </tr>
+      <tr>
+        <td bgcolor="#ffb6c1" th:text="내용"></td>
+        <td><textarea name="content" cols="50" rows="10"></textarea></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <input type="submit" value="게시글 등록">
+        </td>
+      </tr>
+    </table>
+  </form>
+  <a th:href="@{/getBoardList}">글목록</a>
+</body>
+</html>

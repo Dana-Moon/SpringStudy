@@ -3,12 +3,27 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>게시 글 목록</title>
+    <style>
+        .cate_button{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body th:align="center">
     <h1>게시글 목록</h1>
-    <table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0" th:width="700">
+    <form class="cate_button">
+        <input type="button" value="전체">
+        <input type="button" value="공지">
+        <input type="button" value="향수">
+        <input type="button" value="잡담">
+    </form>
+    <table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0" th:width="800">
         <tr>
             <th bgcolor="#ffb6c1" width="100">번호</th>
+            <th bgcolor="#ffb6c1" width="100">분류</th>
             <th bgcolor="#ffb6c1" width="200">제목</th>
             <th bgcolor="#ffb6c1" width="150">작성자</th>
             <th bgcolor="#ffb6c1" width="150">등록일</th>
@@ -19,14 +34,32 @@
 <!--        모델에 있는 boardList 배열을 순회해서 board라는 객체를 하나씩 출력 (유사 : 향상된 for문) -->
         <tr th:each="board : ${boardList}">
             <td th:text="${board.seq}"></td>
-            <td th:text="${board.title}"><a th:href="@{/getBoard(seq=${board.seq})}" th:text="${board.title}"></a></td>
+<!--            a태그를 사용하여 링크 태그를 만들고, @{}로 controller에 mapping 주소를 직시
+                [HTML(클라이언트)]seq=${}에서 [Java(서버)]RequestParam으로 매개변수 전달
+                seq(변수명) = ${} (: HTML(타임리프)에서의 데이터(클라이언트)-->
+            <td th:text="${board.cate}"></td>
+            <td><a th:href="@{/getBoard(
+                                    seq=${board.seq},
+                                    cate=${board.cate},
+                                    userId='userIdTeste',
+                                    userRole='userIdRole',
+                                    title=${board.title},
+                                    writer=${board.writer},
+                                    content=${board.content},
+                                    createDate=${board.createDate},
+                                    cnt=${board.cnt}
+                                    )}"
+                th:text="${board.title}"></a></td>
             <td th:text="${board.writer}"></td>
-            <td th:text="${board.createDate}"></td>
+<!--            dates.format = 날짜를 일정형식으로 바꿔주는 포맷팅-->
+            <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
+<!--            <td th:text="${board.createDate}"></td>-->
             <td th:text="${board.cnt}"></td>
         </tr>
     </table>
 
     <br>
     <a th:href="insertBoard">새글 등록</a>
+    <a ></a>
 </body>
 </html>
