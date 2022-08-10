@@ -84,7 +84,18 @@ public class BoardController {
 //                board_array.add(board);
 //            }
 //        }
+//        String str = content.length() > 20 ? content.substring(0, 20) : content;
 
+        List<String> summary = new ArrayList<>();
+        for(Board i : board_array) {
+//            Board board = new Board();
+            String str = i.getContent().length() > 20 ? i.getContent().substring(0,20) : i.getContent();
+            summary.add(str);
+//            String str = i.getContent();
+//            summary.add(board) = board.getContent(i).length() > 20 ? board.getContent(i).substring(0, 20) : board.getContent(i);
+
+        }
+        model.addAttribute("summary", summary);
 
         //model 객체에 boardList(arrayList)를 boardList key값으로 넣음
         //attributeName = key
@@ -135,7 +146,7 @@ public class BoardController {
  * @Param String HTML에서 받아온 데이터
  * @return String HTML 파일과 연결 (ViewResolver)
  * @author Dana
- * @version 20220808.0.0.1
+ * @version 20220808.0.0.1 (예시)
  */
 
     @GetMapping("insertBoard")
@@ -156,6 +167,10 @@ public class BoardController {
 
         //------------------------------------------------------------
 //        선생님 방식 (이게 더 깔끔한 거 같다)
+
+//        String str = content.length() > 20 ? content.substring(0, 20) : content;
+
+//        String str = content.substring(0,20);
         count++;
         Board board = new Board();
 
