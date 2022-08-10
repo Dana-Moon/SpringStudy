@@ -1,51 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
-    <title>게시 글 상세</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/document.css">
+  <link rel="stylesheet" href="/css/comment.css">
+  <title>게시 글 상세</title>
 </head>
-<body th:align="center">
-  <h1>게시글 상세</h1>
-  <form th:action="@{updateBoard}" method="post">
-    <input name="seq" type="hidden" th:value="${seq}">
-      <table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0">
-        <tr>
-          <td bgcolor="#ffb6c1" th:text="글번호" width="80"></td>
-          <td th:text="${seq}"></td>
-        </tr>
-        <tr>
-          <td bgcolor="#ffb6c1" th:text="분류"></td>
-          <td th:text="${cate}"></td>
-        </tr>
-        <tr>
-          <td bgcolor="#ffb6c1" th:text="제목"></td>
-    <!--      [서버]에서 java의 데이터를 [클라이언트]html 문서에 값을 할당해주는 문법 ${title}-->
-          <td><input name="title" type="text" th:value="${title}"></td>
-        </tr>
-        <tr>
-          <td bgcolor="#ffb6c1" th:text="작성자"></td>
-          <td th:text="${writer}"></td>
-        </tr>
-        <tr>
-          <td bgcolor="#ffb6c1" th:text="내용"></td>
-          <td><textarea name="content" th:text="${content}" cols="40" rows="10"></textarea></td>
-        </tr>
-        <tr>
-          <td bgcolor="#ffb6c1" th:text="등록일"></td>
-          <td th:text = "${createDate}"></td>
-        </tr>
-        <tr>
-          <td bgcolor="#ffb6c1" th:text="조회수"></td>
-          <td th:text="${cnt}"></td>
-        </tr>
-        <tr>
-          <td colspan="2" align="center">
-            <input type="submit" value="게시글 수정">
-          </td>
-        </tr>
-      </table>
-  </form>
-  <a th:href="@{/deleteBoard(seq=${seq})}">글삭제</a>&nbsp; &nbsp;
-  <a th:href="@{/getBoardList}">글목록</a>
+<body>
+<h1 th:align="center">게시글 상세</h1>
+<main>
+  <div class="row">
+    <div class="category">카테고리</div>
+    <div class="title" th:text="${board.title}">제목입니다</div>
+  </div>
+  <div class="row between">
+    <div class="name fl" th:text="${board.writer}">글쓴이</div>
+    <div class="fr">
+      <div class="date fl" th:text="${board.createDate}">2022-08-09</div>
+      <div class="cnt fl" th:text="${board.createDate}">
+        <b>조회 수</b>
+        <span th:text="${board.cnt}">12</span>
+      </div>
+    </div>
+  </div>
+  <article class="content" th:text="${board.content}"></article>
+  <div class="row between">
+    <a class="btn back fl" th:href="@{/getBoardList}"></a>
+    <div class="row fr gap">
+      <a class="btn write fl" th:href="@{/updateBoard(seq=${board.seq})}"></a>
+      <form class="fl" action="deleteBoard" method="post">
+        <input type="hidden" name="seq" th:value="${board.seq}">
+        <button class="btn delete" onclick="this.submit()"></button>
+      </form>
+    </div>
+  </div>
+</main>
+
+
 </body>
 </html>

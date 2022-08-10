@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-<!--    <link rel="favicon" href="/static/img/ico/favicon.ico">-->
     <title>Title</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
-    hello world
-    <a href="/hello">hello</a>
-    <a href="www.naver.com">naver</a>
-    <a href="/getBoardList">게시판</a>
-    <hr>
-    <p th:text="${msg}"></p>
-    <hr>
-    <hr>
-    <h1>회원가입</h1>
-<!--    톰캣한테 /account를 보내준다. 이것 때문에 웹페이지 이름 끝에 /account가 붙는다. -->
-    <form method="POST" action="/account">
-        <input type="text" name="id1" th:value="${id2}"/>
-        <input type="submit" value="Click"/>
-    </form>
+<p>hello world</p>
+<a href="/hello">hello!</a>
+<a href="/account">account!</a>
+<hr>
+<p th:text="${msg}"></p>
+<hr>
+<h1>회원가입</h1>
+<form method="POST" action="/account">
+    <input type="text" name="id1" th:value="${id2}" />
+    <input type="submit" value="Click" />
+</form>
 </body>
 </html>
