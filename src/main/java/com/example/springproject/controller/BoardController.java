@@ -197,6 +197,9 @@ public class BoardController {
 
         //redirect와 forword를 이후에 배우게 될 예정.
         //redirect : 페이지 전환 이동 (getBoardList 페이지로 이동)
+
+        /* BoardService의 insetBoard 메서드 실행 > BoardRepository
+        * */
         return "redirect:getBoardList";
     }
 
@@ -220,6 +223,7 @@ public class BoardController {
 
         return "redirect:getBoardList";
     }
+
 
     //Post 방식으로 [클라이언트]에서 [서버]로 맵핑.
     @PostMapping("updateBoard")

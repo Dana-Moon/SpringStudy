@@ -1,21 +1,50 @@
 plugins {
+    //프로젝트의 스프링부트 프레임워크의 버전 설정
     id 'org.springframework.boot' version '2.7.2'
+    //프로젝트에 필요한 라이브러리를 관리해주는 툴(매니지먼트)의 버전
     id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    //쓰는 언어 (python, go, kotlin ...)를 쓰면 dependency에서 추천과 다운을 해준다.
     id 'java'
 }
 
+//프로젝트 정보
 group = 'com.example'
 //첫번째 자리 : 메이저 업데이트, 두번째 자리 : 마이너 업데이트, 세번째 자리 : fix버젼(오탈자, 이미지 변경)
 version = '0.0.1-SNAPSHOT'
-//자바 버젼
+//자바 버젼 (이것을 안 써주면 에러가 날 수 있다. 반드시 써주어야 한다.)
 sourceCompatibility = '17'
 
+//dependency 라이브러리를 다운받은 사이트 (메이븐센트랄)
 //디펜던시를 다운 받는 위치
 repositories {
     mavenCentral()
 }
 
+//라이브러리. 이게 없으면 스프링부트 만들기가 안된다.
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    /* 8/10
+    * compile : 자바코드를 실행가능한 바이트 코드로 변경 (바이트코드로 실행하면 컴퓨터는 인식하고 실행)
+    * runtime : 실행가능한(=컴파일이 완료된) 코드를 실행하는 시점
+    * 인터프린트는 실시간으로 개발한 코드를 해석해서 컴퓨터가 실행하는 것. (인터프린트도 컴파일을 하나, 한줄한줄씩 하는 거라 컴파일처럼 안 보일 뿐임.)
+    *
+    * 롬복 : 도메인(class)이 가져야 할 getter, setter, builder 등을 자동으로 코드 생성(@어노테이션) (단, *컴파일*에서만 라이브러리 사용.)
+    *
+    * 라이브러리 : 갖다 쓰는 것 (자바 기본 규칙에 따름).
+    * 프레임워크 : 프레임워크의 독자적인 구조와 규칙에 따름.
+    *
+    * implementation : 구현된 전체에서 사용하는 라이브러리(프레임워크).
+    * 타임리프 : HTML과 JAVA코드 연동하는 템플릿 (단, 서버에서 사용)
+    *
+    * starter : 스프링부트에서 쓰는 기본 라이브러리 집합
+    * JPA : Java Presistence API. 자바에서 DB와 연결되는 객체지향 API(인터페이스).
+    *
+    * 유닛 테스트 (자바 코드를 만들면, 잘 돌아가는지 기능별로 테스트 할 때 쓰는 용도)
+    *
+    * devtools : 리로딩없이 화면 실시간으로 나타남. 개발하는 데 편리한 기능들의 집합
+    */
+
     /* 7/29
     롬복추가*/
     compileOnly 'org.projectlombok:lombok'
@@ -25,11 +54,26 @@ dependencies {
     starter web에 tomcat이 포함되어 있음
     tomcat : spring 프로젝트를 웹하고 연결해주는 도구 */
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    //tomcat
+    //starter-web이 원래 있었고, starter만 있는 거 추가함.
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    //아랫줄 추가
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //    implementation 'org.springframework.boot:spring-boot-devtools-tests:'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //8/10 DB 오라클 접속에 필요한 라이브러리.
+    //ojdbc8 오라클에 제공하는 라이브러리로 JAVA와 연동하기 위해 쓰임 (8버전이 19c에 활용 가능)
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+//    implementation 'com.oracle.ojdbc:ucp'
+    //oraclepki, osdt_core, osdt_cert 오라클과 자바 사이에서 연동되는 드라이버를 사용하기 위한 정보가 담긴 라이브러리
+    //security에 담겨있다. 통신하는 과정에 있어서 보안..??
+    //드라이버 : 예) 그래픽 카드를 컴퓨터와 연결하기 위해서 드라이버를 다운받아 *컴퓨터가 그래픽카드를 드라이버를 통해서 사용*
+    //드라이버에 대해 설명을 하기 어려워 하셔서, 예시를 들어서 설명해주심. 드라이버 궁금하면 따로 찾아보기.
+    //전자지갑에 모두 있다.
+    implementation 'com.oracle.database.security:oraclepki'
+    implementation 'com.oracle.database.security:osdt_core'
+    implementation 'com.oracle.database.security:osdt_cert'
+
 }
 
 //테스트 모듈에 관한 정보
