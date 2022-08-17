@@ -1,12 +1,12 @@
-package com.example.springproject.controller;
+package com.example.springproject.controller.board;
 
 //내장 라이브러리 호출(import), 설치 x
 import java.util.Date;
 import java.util.List;
 
 //외장 라이브러리 호출(import), gradle로 설치한 라이브러리
-import com.example.springproject.domain.Board;
-import com.example.springproject.service.BoardService;
+import com.example.springproject.domain.board.Board;
+import com.example.springproject.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +29,7 @@ public class BoardController {
     }
 
     @GetMapping("/insertBoard")
-    public String insertBoardView() {
+    public String insertBoard() {
         return "insertBoard";
     }
 

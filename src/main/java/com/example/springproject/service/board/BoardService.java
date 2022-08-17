@@ -1,6 +1,6 @@
-package com.example.springproject.service;
+package com.example.springproject.service.board;
 
-import com.example.springproject.domain.Board;
+import com.example.springproject.domain.board.Board;
 
 import java.util.List;
 

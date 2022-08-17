@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="charset=UTF-8">
+    <title>회원 가입</title>
+</head>
+<body>
+    <form th:action="@{/account/insertAccount}" method="post">
+        <table th:align = "center" border="1" th:cellpadding="0" th:cellspacing="0">
+            <tr>
+                <td bgcolor="#ffb6c1" th:text="ID" width="80"></td>
+                <td><input name="id" type="text" th:placeholder="ID" size="50"></td>
+            </tr>
+            <tr>
+                <td bgcolor="#ffb6c1" th:text="PASSWORD"></td>
+                <td><input name="password" type="text" th:placeholder="비밀번호" size="50"></td>
+            </tr>
+            <tr>
+                <td bgcolor="#ffb6c1" th:text="EMAIL"></td>
+                <td><input name="email" type="text" th:placeholder="이메일" size="50"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"></td>
+                <input type="submit" value="회원등록">
+
+            </tr>
+        </table>
+    </form>
+    <a th:href="@{/getAccountList}" type="button" value="회원 계정 목록"></a>
+</body>
+</html>

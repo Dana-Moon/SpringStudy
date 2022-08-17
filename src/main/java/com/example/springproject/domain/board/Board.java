@@ -1,10 +1,11 @@
-package com.example.springproject.domain;
+package com.example.springproject.domain.board;
 
 
 
 //외장 라이브러리(gradle로 다운로드)
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,14 +20,23 @@ import java.util.Date;
 public class Board {
     //@ID : PK (primary key) SQL문의 기본키
     //@GeneratedValue 자동생성 속성
+
+//    @GenericGenerator(
+//            name = "myBoardGenerator",
+//            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+//            parameters = {
+//                    @Parameter (name = "table_name", value = "MY_TABLE")
+//            }
+//    )
+//    @GeneratedValue(generator = "myBoardGenerator")
     @Id @GeneratedValue
     private Long seq;
 
-    @Column(length = 40, nullable = false)
-    private String cate;
+//    @Column()
+//    private String cate;
 
     //@Column은 title 필드값을 컬럼화할 때, 깊이와 null 입력 가능 여부 옵션
-    @Column(nullable = false)
+    @Column(length = 40, nullable = false)
     private String title;
 
     @Column(nullable = false, updatable = false)

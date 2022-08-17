@@ -1,7 +1,8 @@
-package com.example.springproject.service;
+package com.example.springproject.service.board;
 
-import com.example.springproject.domain.Board;
-import com.example.springproject.persistence.BoardRepository;
+import com.example.springproject.domain.board.Board;
+import com.example.springproject.persistence.board.BoardRepository;
+import com.example.springproject.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

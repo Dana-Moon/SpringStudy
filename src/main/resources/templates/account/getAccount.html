@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="charset=UTF-8">
+    <title>계정 상세보기</title>
+</head>
+<body>
+<form th:action="@{/account/updateAccount}" method="post">
+    <input name="seq" type="hidden" th:value="${member.seq}">
+    <table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0">
+        <tr>
+            <td bgcolor="#ffb6c1" th:text="번호">번호</td>
+            <td th:text="${member.seq}"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#ffb6c1" th:text="ID"></td>
+            <td>
+                <input name="id" type="text" th:value="${member.id}">
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#ffb6c1" th:text="Password"></td>
+            <td>
+                <input name="password" type="text" th:value="${member.password}">
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#ffb6c1" th:text="Email"></td>
+            <td>
+                <input name="email" type="text" th:value="${member.email}">
+            </td>
+        </tr>
+        <tr>
+            <input type="submit" value="수정 완료">
+        </tr>
+<!--        <tr>-->
+<!--            <a class="btn write fl" th:href="@{/updateBoard(seq=${board.seq})}">-->
+<!--                <button>수정하기</button>-->
+<!--            </a>-->
+<!--        </tr>-->
+    </table>
+</form>
+</body>
+</html>
