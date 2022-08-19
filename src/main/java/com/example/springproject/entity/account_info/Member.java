@@ -1,9 +1,9 @@
-package com.example.springproject.domain.account_info;
+package com.example.springproject.entity.account_info;
 
+import com.example.springproject.entity.base.BaseTimeEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,7 +18,7 @@ import java.util.Date;
 @Getter
 @ToString
 @Entity
-public class Member {
+public class Member extends BaseTimeEntity {
     //@Id :table을 만들 때, 테이블의 튜플(row)를 식별할 수 있는 기본키
     //그 기본키 = seq (보통은 id이지만, board와 최대한 똑같이 만들고 싶기 때문에 seq로 진행.)
 
@@ -47,9 +47,13 @@ public class Member {
 
     private String email;
 
-    @Temporal(TemporalType.DATE)
-    private Date createDate;
+//    @Temporal(TemporalType.DATE)
+//    private Date createDate;
+//
+//    @Temporal(TemporalType.DATE)
+//    private Date updateDate;
 
-    @Temporal(TemporalType.DATE)
-    private Date updateDate;
+    //deleteYN
+
+//    private String keyword;
 }

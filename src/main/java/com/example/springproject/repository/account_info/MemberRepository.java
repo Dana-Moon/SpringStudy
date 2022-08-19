@@ -1,9 +1,8 @@
-package com.example.springproject.persistence.account_info;
+package com.example.springproject.repository.account_info;
 
-import com.example.springproject.domain.account_info.Member;
+import com.example.springproject.entity.account_info.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
@@ -29,6 +28,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findMemberByIdOrEmail(String id, String email);
 
     //(ID는 중복 가능한 구조에서) Id 값을 매개변수로 넣고, 아이디 생성날짜가 가장 최신인 것
-    @Query(value = "select m from Member m where m.id = :id order by m.createDate desc")
-    Member findFirstById(String id);
+//    @Query(value = "select m from Member m  where m.id = :id order by m.createDate desc")
+//    Member findFirstById(String id);
+
+    @Query(value = "select m from Member m where m.email like concat('%',:keyword,'%')")
+    List<Member> findMembesrByEmail(String keyword);
+//    @Query(value = "select m from Member m where m.email like concat('%',:email,'%')")
+//    List<Member> findByEmail(String email);
 }

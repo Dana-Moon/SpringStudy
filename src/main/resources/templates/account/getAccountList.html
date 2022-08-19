@@ -35,6 +35,11 @@
     <a th:href="@{/account/selectAccount}">
         <button>회원찾기</button>
     </a>
+    <form th:action="@{/account/search}" method="post">
+        <input name="keyword" type="text" placeholder="email 키워드" size="50">
+        <input type="submit" value="email 검색하기">
+    </form>
+
 <!--account/getAccountList에서 getAccount 호출할 때
 기본 시작점이 templates이기 때문에
 절대 경로일 경우, temlplates에서 시작하며, 상대경로이면 getAccountList 페이지가 있는 폴더에서 시작

@@ -1,6 +1,6 @@
-package com.example.springproject.persistence.board;
+package com.example.springproject.repository.board;
 
-import com.example.springproject.domain.board.Board;
+import com.example.springproject.entity.board.Board;
 import org.springframework.data.repository.CrudRepository;
 
 //CrudRepository를 상속받음

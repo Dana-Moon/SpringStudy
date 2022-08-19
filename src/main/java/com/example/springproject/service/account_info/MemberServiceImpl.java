@@ -1,8 +1,9 @@
 package com.example.springproject.service.account_info;
 
-import com.example.springproject.domain.account_info.Member;
-import com.example.springproject.persistence.account_info.MemberRepository;
+import com.example.springproject.entity.account_info.Member;
+import com.example.springproject.repository.account_info.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class MemberServiceImpl implements MemberService{
     //findAll() : memberRepo에 있는 모든 정보 가져오기 메서드 실행
     @Override
     public List<Member> getMemberList() {
-        return (List<Member>) memberRepo.findAll();
+        return memberRepo.findAll();
     }
 
     //회원 1명의 정보를 Entiiy에 맞춰서 DB에 저장
@@ -78,8 +79,18 @@ public class MemberServiceImpl implements MemberService{
         return memberRepo.findMemberByIdOrEmail(Id, Email);
     };
 
+//    @Override
+//    public Member getMemberWhereIdAndROWNUL1(String id) {
+//        return memberRepo.findFirstById(id);
+//    }
+
     @Override
-    public Member getMemberWhereIdAndROWNUL1(String id) {
-        return memberRepo.findFirstById(id);
+    public List<Member> descMember(Member member) {
+        return memberRepo.findAll(Sort.by(Sort.Direction.DESC,"seq"));
+    }
+
+    @Override
+    public List<Member> getSearchEmail(String keyword) {
+        return memberRepo.findMembesrByEmail(keyword);
     }
 }

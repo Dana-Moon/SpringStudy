@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>유사한 이메일 찾기</title>
+</head>
+<body>
+    <h1>유사한 이메일 찾기</h1>
+    <table th:align border="1" th:cellpadding="0" th:cellspacing="0" th:width="1200">
+        <tr>
+            <th bgcolor="#ffb6c1" width="100">번호</th>
+            <th bgcolor="#ffb6c1" width="200">회원 ID</th>
+            <th bgcolor="#ffb6c1" width="200">회원 비밀번호</th>
+            <th bgcolor="#ffb6c1" width="300">회원 Email</th>
+<!--            <th bgcolor="#ffb6c1" width="200">계정 생성 날짜</th>-->
+<!--            <th bgcolor="#ffb6c1" width="200">계정 업데이트 날짜</th>-->
+        </tr>
+        <tr th:each="member: ${memberEmail}">
+            <td th:text="${member.seq}"></td>
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.password}"></td>
+            <td th:text="${member.email}"></td>
+<!--            <td th:text="${member.createDate}"></td>-->
+<!--            <td th:text="${member.updateDate}"></td>-->
+        </tr>
+    </table>
+<!--    <table th:align border="1" th:cellpadding="0" th:cellspacing="0" th:width="1200">-->
+<!--        <tr>-->
+<!--            <th bgcolor="#ffb6c1" width="80"></th>-->
+<!--        </tr>-->
+<!--        <tr th:each="member : ${memberEmailList}">-->
+<!--            <td th:text="${memberEmailList}"></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+</body>
+</html>

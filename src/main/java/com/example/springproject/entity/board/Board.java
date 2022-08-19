@@ -1,11 +1,11 @@
-package com.example.springproject.domain.board;
+package com.example.springproject.entity.board;
 
 
 
 //외장 라이브러리(gradle로 다운로드)
+import com.example.springproject.entity.base.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,7 +17,7 @@ import java.util.Date;
 @Setter
 @ToString
 @Entity
-public class Board {
+public class Board extends BaseTimeEntity {
     //@ID : PK (primary key) SQL문의 기본키
     //@GeneratedValue 자동생성 속성
 
@@ -46,13 +46,15 @@ public class Board {
     @ColumnDefault("'no content'")
     private String content;
 
-    @Temporal(TemporalType.DATE)
-    private Date createDate;
-
-    @ColumnDefault("0")
-    @Column(insertable = false, updatable = false)
-    private Long cnt;
+//    @Temporal(TemporalType.DATE)
+//    private Date createDate;
+//
+//    @ColumnDefault("0")
+//    @Column(insertable = false, updatable = false)
+//    private Long cnt;
 
     //원래는 setter, getter라는 메서드가 있어야 private 필드값에 데이터를 넣을 수 있지만, (gradle 라이브러리 설치)롬복이라는 라이브러리로
     //자동 getter, setter 메서드 생성
+
+    //deleteYN
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 //외장 라이브러리 호출(import), gradle로 설치한 라이브러리
-import com.example.springproject.domain.board.Board;
+import com.example.springproject.entity.board.Board;
 import com.example.springproject.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

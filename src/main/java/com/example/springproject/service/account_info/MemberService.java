@@ -1,6 +1,6 @@
 package com.example.springproject.service.account_info;
 
-import com.example.springproject.domain.account_info.Member;
+import com.example.springproject.entity.account_info.Member;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface MemberService {
      */
     Member getMemberWhereIdOrEmail(String Id, String Email);
 
-    Member getMemberWhereIdAndROWNUL1(String Id);
+//    Member getMemberWhereIdAndROWNUL1(String Id);
     //Member 타입으로 리턴하겠다.
     List<Member> getMemberList();
 
@@ -23,4 +23,43 @@ public interface MemberService {
     void updateMember(Member member);
 
     void deleteMember(Member member);
+
+    List<Member> descMember(Member member);
+
+
+    List<Member> getSearchEmail(String keyword);
+
+    //3조
+    //결과값 : 입력 받은 정보(email, id, pw)가 유사사실유무 확인 후 비밀번호 변경(updateMember의 password)
+//    boolean booleanSearchUserByEmail(Member member);
+//    boolean booleanSearchUserById(Member member);
+//    boolean booleanSearchUserByPassword(Member member);
+//
+//    //6조
+//    //별표처리 MemberList (replace)
+//    List<Member> getMemberListEmailSecurityStarByMemberList(List<Member> memberList);
+//
+//    //2,5조
+//    //민감데이터 (SHA256...?)
+//    List<Member> getMemberListEncodingByMemberList(List<Member> memberList);
+//
+//    //작성자의 모든 게시글 출력
+//    List<Member> getBoardListAllBoardByMemberId(Member member);
+//
+//    //board의 작성자와 회원이 같은지 확인
+//    boolean booleanMemberIdEqualsBoardWriterByMember(Member member);
+
+    //4조
+    //키워드분석
+    //doNounsAnalysis
+
+    //getAutoKeywordBoardList
+
+    //1조
+    //email @앞에 문자열과 id가 동일할 경우
+//    boolean
+    //id와 pw가 동일할 경우
+//    boolean
+    //비밀번호 변경 테이블 생성 후 변결할 기록을 남긴 후, 변경 내용 최선 3회 내용과 비교
+//    List<Member> getBoardLatestBoardList(Member member);
 }
