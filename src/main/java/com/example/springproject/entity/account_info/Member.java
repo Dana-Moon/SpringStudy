@@ -1,12 +1,16 @@
 package com.example.springproject.entity.account_info;
 
 import com.example.springproject.entity.base.BaseTimeEntity;
+import com.example.springproject.entity.board.Board;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 // 8/12
 //@AllArgsConstructor : 모든 매개변수를 갖는 생성자
@@ -18,7 +22,7 @@ import java.util.Date;
 @Getter
 @ToString
 @Entity
-public class Member extends BaseTimeEntity {
+public class Member extends BaseTimeEntity implements Serializable {
     //@Id :table을 만들 때, 테이블의 튜플(row)를 식별할 수 있는 기본키
     //그 기본키 = seq (보통은 id이지만, board와 최대한 똑같이 만들고 싶기 때문에 seq로 진행.)
 
@@ -40,7 +44,7 @@ public class Member extends BaseTimeEntity {
     @GeneratedValue
     private Long seq;
 
-    @Column(length = 40, nullable = false)
+    @Column(length = 40, nullable = false, unique = true)
     private String id;
 
     private String password;
@@ -56,4 +60,15 @@ public class Member extends BaseTimeEntity {
     //deleteYN
 
 //    private String keyword;
+
+    // 8/22
+    //member는 여러 개의 board를 가질 수 있다고 선언
+    //board들을 가지고 있다고 필드에 넣음 (JPA는 이 필드 내용으로 테이블 연관관계(JOIN)으로 식별)
+    //@OneToMany는 1 튜플마다 여러 개의 board를 가진다는 속성 선언과 다수 Entity 연동에 Springboot는 Serializable 상속 요구함
+    //Selializable을 왜 implements 하였는가?라는 질문이 들어온다면, @OneToMany라는 어노테이션을 쓰기 위해서라고만 답변하면 해결됨.
+    @OneToMany(mappedBy = "memeber")
+    private List<Board> boardList = new ArrayList<>();
+
+    //memebr field로 board를 사용하기 위해서 implements Selializable을 해주어야 함.
+    //이를 위해서는 Hibernate를 알아야 이해할 수 있어야 함. JPA보다 더 큰 범주의 지식이라고 할 수 있기 때문에 Hibernate에 대해 설명하지 않음.
 }

@@ -57,9 +57,12 @@ public interface MemberService {
 
     //1조
     //email @앞에 문자열과 id가 동일할 경우
-//    boolean
+//    boolean booleanEmailEqualsIdByMemberEmail(List<>)
     //id와 pw가 동일할 경우
 //    boolean
-    //비밀번호 변경 테이블 생성 후 변결할 기록을 남긴 후, 변경 내용 최선 3회 내용과 비교
-//    List<Member> getBoardLatestBoardList(Member member);
+    //30일 지난 회원에게 변경 페이지 안내
+    //30일 후 redirect로 다른 페이지로 가도록 만들면 된다.
+//    boolean booleanAfter30DaysChangePasswordByMemberUpdateDate(Member member);
+    //비밀빈호 변경 테이블 생성 후 변경한 기록을 남긴 후, 변경 내용 최신 3회 내용과 비교
+    //boolean booleanChangedPassword3CheckByMemberPassword(Member member);
 }

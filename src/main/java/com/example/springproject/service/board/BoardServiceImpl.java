@@ -1,5 +1,6 @@
 package com.example.springproject.service.board;
 
+import com.example.springproject.entity.account_info.Member;
 import com.example.springproject.entity.board.Board;
 import com.example.springproject.repository.board.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +31,21 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void updateBoard(Board board) {
+    public Board updateBoard(Board board) {
         Board findBoard = boardRepo.findById(board.getSeq()).get();
         findBoard.setTitle(board.getTitle());
         findBoard.setContent(board.getContent());
-        boardRepo.save(findBoard);
+        return boardRepo.save(findBoard);
     }
     //클라이언트에서 받아온 Board 객체의 데이터를 BoardRepository의 상속받은 CrudRepository의 Save 메서드를 통해서
     //DB에 저장 (저장하는 SQL문 만들어서 실행)
     @Override
     public void deleteBoard(Board board) {
         boardRepo.deleteById(board.getSeq());
+    }
+
+    @Override
+    public List<Board> getBoardListByMemberId(Member member) {
+        return boardRepo.findAllByMemberIdEqualsBoardWriter(member.getId());
     }
 }

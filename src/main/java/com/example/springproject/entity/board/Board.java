@@ -3,6 +3,7 @@ package com.example.springproject.entity.board;
 
 
 //외장 라이브러리(gradle로 다운로드)
+import com.example.springproject.entity.account_info.Member;
 import com.example.springproject.entity.base.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -49,12 +50,20 @@ public class Board extends BaseTimeEntity {
 //    @Temporal(TemporalType.DATE)
 //    private Date createDate;
 //
-//    @ColumnDefault("0")
-//    @Column(insertable = false, updatable = false)
-//    private Long cnt;
+    @ColumnDefault("0")
+    @Column(insertable = false, updatable = false)
+    private Long cnt;
 
     //원래는 setter, getter라는 메서드가 있어야 private 필드값에 데이터를 넣을 수 있지만, (gradle 라이브러리 설치)롬복이라는 라이브러리로
     //자동 getter, setter 메서드 생성
 
     //deleteYN
+
+    //@ManyToOne 다양한 board는 1개의 memebr를 바라본다
+    //member를 필드에 선언
+    //참조키가 어디인지 선언(memebr 기본키가 board의 참조키로 기본적으로 할당)
+    //board의 writer는 member의 id와 연관되어 있고, 참조키로 id로 연결되어 있다.
+    @ManyToOne
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private Member memeber;
 }

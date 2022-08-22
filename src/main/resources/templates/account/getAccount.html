@@ -40,5 +40,12 @@
 <!--        </tr>-->
     </table>
 </form>
+<!--get 방식으로 member.id 파라미터 가지고 board로 이동-->
+<!--타임리프 문법으로는 member 기준으로 필드값을 출력하고 있으므로, selectBoard에 파라미터 값을 board.member.id로 넘겨 줄 경우
+ 그에 따른 member와 board와의 관계를 타임리프에서 인지하고,
+ 클라이언트에서 서버로 넘어갈 때 entity가 board.member.id를 인지하고 객체화 시켜야 하는 문제-->
+<a th:href="@{/board/selectBoard(id=${member.id})}">
+    <button>회원게시글 보기</button>
+</a>
 </body>
 </html>

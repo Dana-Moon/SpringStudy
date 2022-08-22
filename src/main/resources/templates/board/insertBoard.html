@@ -10,10 +10,10 @@
 <!--    board(객체).title(key)으로 board객체를 만들어서 서버에 전달-->
 <header>
   <h3 th:text="${board == null ? '새글 등록하기' : '글 수정하기'}"></h3>
-  <a th:if="${board == null}" class="btn back fl" th:href="@{/getBoardList}"></a>
-  <a th:unless="${board == null}" class="btn back fl" th:href="@{/getBoard(seq=${board.seq})}"></a>
+  <a th:if="${board == null}" class="btn back fl" th:href="@{/board/getBoardList}"></a>
+  <a th:unless="${board == null}" class="btn back fl" th:href="@{/board/getBoard(seq=${board.seq})}"></a>
 </header>
-<form id="write" th:action="${board == null ? 'insertBoard' : 'updateBoard'}" method="post">
+<form id="write" th:action="|/board/${board == null ? 'insertBoard' : 'updateBoard'}|" method="post">
   <input th:if="${board} != null" type="hidden" name="seq" th:value="${board.seq}">
   <div class="row">
     <select class="col category">
@@ -27,7 +27,7 @@
     <label th:if="${board == null}" class="row label writer"><input name="writer" type="text"></label>
     <div th:unless="${board == null}" class="row label writer" th:text="${board.writer}"></div>
     <div class="row fr">
-      <button class="btn write fl" th:classappend="${board} != null ? 'update'" type="submit" onclick="this.submit()"></button>
+      <button class="btn write fl" th:classappend="${board} != null ? 'update':''" type="submit" onclick="this.submit()"></button>
     </div>
   </div>
 </form>

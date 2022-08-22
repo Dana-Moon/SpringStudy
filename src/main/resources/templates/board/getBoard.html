@@ -26,10 +26,10 @@
   </div>
   <article class="content" th:text="${board.content}"></article>
   <div class="row between">
-    <a class="btn back fl" th:href="@{/getBoardList}"></a>
+    <a class="btn back fl" th:href="@{/board/getBoardList}"></a>
     <div class="row fr gap">
-      <a class="btn write fl" th:href="@{/updateBoard(seq=${board.seq})}"></a>
-      <form class="fl" action="deleteBoard" method="post">
+      <a class="btn write fl" th:href="@{/board/updateBoard(seq=${board.seq})}" methods="post"></a>
+      <form class="fl" th:action="@{/board/deleteBoard}" method="get">
         <input type="hidden" name="seq" th:value="${board.seq}">
         <button class="btn delete" onclick="this.submit()"></button>
       </form>

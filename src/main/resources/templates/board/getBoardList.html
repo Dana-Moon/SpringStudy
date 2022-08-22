@@ -22,7 +22,7 @@
     <tr th:each="board : ${boardList}">
         <td class="seq" th:text="${board.seq}"></td>
         <td class="title">
-            <a th:href="@{/getBoard(seq=${board.seq})}">
+            <a th:href="@{/board/getBoard(seq=${board.seq})}">
                 <span th:text="${board.title}"></span>
                 <div class="summary">
                     <div>요약입니다.</div>
@@ -37,7 +37,7 @@
 </table>
 <div class="btn_area clear">
     <div class="fr">
-        <a class="btn write" th:href="@{/insertBoard}">쓰기</a>
+        <a class="btn write" th:href="@{/board/insertBoard}">쓰기</a>
     </div>
 </div>
 </body>

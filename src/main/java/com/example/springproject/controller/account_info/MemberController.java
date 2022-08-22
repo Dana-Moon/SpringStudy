@@ -171,7 +171,11 @@ public class MemberController {
     }
 
     @PostMapping("/search")
-    public String searchEmail(@RequestParam("keyword") String keyword, Model model) {
+    public String searchEmail(@RequestParam("keyword") String keyword, Model model, Member member) {
+        System.out.println(member.getId());
+        System.out.println(member.getPassword());
+        System.out.println(member.getEmail());
+        System.out.println(keyword);
         model.addAttribute("memberEmail", memberService.getSearchEmail(keyword));
         return "account/searchEmail";
     }

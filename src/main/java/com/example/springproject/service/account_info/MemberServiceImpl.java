@@ -10,15 +10,20 @@ import java.util.List;
 
 @Service
 public class MemberServiceImpl implements MemberService{
+
+    private final MemberRepository memberRepo;
+
     @Autowired
-    private MemberRepository memberRepo;
+    protected MemberServiceImpl(MemberRepository memberRepo) {
+        this.memberRepo = memberRepo;
+    }
 
     //(List<Member>) : 뒤에 있는 결과값을 형변환
     //memberRepo : @Autowired MemberRepository를 통해 기능 실행
     //findAll() : memberRepo에 있는 모든 정보 가져오기 메서드 실행
     @Override
     public List<Member> getMemberList() {
-        return memberRepo.findAll();
+        return (List<Member>) memberRepo.findAll();
     }
 
     //회원 1명의 정보를 Entiiy에 맞춰서 DB에 저장
@@ -93,4 +98,5 @@ public class MemberServiceImpl implements MemberService{
     public List<Member> getSearchEmail(String keyword) {
         return memberRepo.findMembesrByEmail(keyword);
     }
+
 }
