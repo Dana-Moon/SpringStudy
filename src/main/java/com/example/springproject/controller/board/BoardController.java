@@ -7,6 +7,7 @@ import java.util.List;
 //외장 라이브러리 호출(import), gradle로 설치한 라이브러리
 import com.example.springproject.entity.account_info.Member;
 import com.example.springproject.entity.board.Board;
+import com.example.springproject.entity.board.Comments;
 import com.example.springproject.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,14 +65,14 @@ public class BoardController {
  * @version 20220808.0.0.1 (예시)
  */
     @PostMapping ("/updateBoard")
-    public String updateBoard(Board board, Model model) {
-        model.addAttribute("board", boardService.updateBoard(board));
+    public String updateBoard(Board board) {
+         boardService.updateBoard(board);
         return "redirect:/board/getBoard?seq="+board.getSeq();
     }
 
     @GetMapping("/updateBoard")
     public String updateBoardView(Board board, Model model) {
-        model.addAttribute("board", boardService.updateBoard(board));
+        model.addAttribute("board", boardService.getBoard(board));
         return "/board/insertBoard";
     }
 
@@ -101,6 +102,19 @@ public class BoardController {
 
         model.addAttribute("boardList",boardService.getBoardListByMemberId(member));
         return "redirect:/board/getBoardList";
+    }
+
+    @PostMapping("/insertComment")
+    public String insertComment(Comments comments) {
+        boardService.insertComments(comments);
+        return "redirect:/board/getBoard";
+    }
+
+    //board Seq 전달하면 전체 comments를 불러오는 controller method
+    @GetMapping("/getCommentList")
+    public String getCommentsList(Comments comments, Model model) {
+        model.addAttribute("CommentsList", boardService.getAllComments(comments));
+        return "/board/getCommentList";
     }
 }
 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/board.css">
+<head>
+    <meta charset="UTF-8">
+    <title>댓글 목록보기</title>
+</head>
+<body>
+<h1>댓글 목록</h1>
+<table id="board">
+    <tr>
+        <th scope="col" class="seq">번호</th>
+        <th scope="col" class="title">제목</th>
+        <th scope="col" class="writer">작성자</th>
+        <th scope="col" class="title">Comments</th>
+    </tr>
+    <tr th:each="Comments :${CommentsList}">
+        <td th:text="${Comments.seq}"></td>
+        <td th:text="${Comments.board.title}"></td>
+        <td th:text="${Comments.board.writer}"></td>
+        <td th:text="${Comments.comments}"></td>
+    </tr>
+</table>
+</body>
+</html>

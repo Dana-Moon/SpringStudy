@@ -21,9 +21,10 @@ public class MemberServiceImpl implements MemberService{
     //(List<Member>) : 뒤에 있는 결과값을 형변환
     //memberRepo : @Autowired MemberRepository를 통해 기능 실행
     //findAll() : memberRepo에 있는 모든 정보 가져오기 메서드 실행
+    //return에서 (List<Member>) 부분을 8/22일 member와 board 이어주면서 추가했는데 회색으로 떠있다. 굳이 해야하는 설정인지는 모르겠다. redundant(불필요한) 이라고 떠있다. 지워야겠다.
     @Override
     public List<Member> getMemberList() {
-        return (List<Member>) memberRepo.findAll();
+        return memberRepo.findAll();
     }
 
     //회원 1명의 정보를 Entiiy에 맞춰서 DB에 저장

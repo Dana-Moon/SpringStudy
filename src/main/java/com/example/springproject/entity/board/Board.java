@@ -9,7 +9,9 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 //롬복에 있는 Getter라는 메서드를 통해 하단에 있는 클래스 Board는 자동으로 getter, setter 메서드가 생성됨을 암시함.
 //암시 -> 어노테이션을 썼기 때문.
@@ -30,7 +32,8 @@ public class Board extends BaseTimeEntity {
 //            }
 //    )
 //    @GeneratedValue(generator = "myBoardGenerator")
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
 //    @Column()
@@ -63,7 +66,11 @@ public class Board extends BaseTimeEntity {
     //member를 필드에 선언
     //참조키가 어디인지 선언(memebr 기본키가 board의 참조키로 기본적으로 할당)
     //board의 writer는 member의 id와 연관되어 있고, 참조키로 id로 연결되어 있다.
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id")
-    private Member memeber;
+    private Member member;
+
+    // 8/24
+    @OneToMany(mappedBy = "board")
+    private List<Comments> commentsList = new ArrayList<>();
 }

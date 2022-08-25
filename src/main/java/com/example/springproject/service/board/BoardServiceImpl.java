@@ -2,7 +2,9 @@ package com.example.springproject.service.board;
 
 import com.example.springproject.entity.account_info.Member;
 import com.example.springproject.entity.board.Board;
+import com.example.springproject.entity.board.Comments;
 import com.example.springproject.repository.board.BoardRepository;
+import com.example.springproject.repository.board.CommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,15 @@ import java.util.List;
 @Service
 public class BoardServiceImpl implements BoardService {
 
+
+    private final BoardRepository boardRepo;
+    private final CommentsRepository commentsRepo;
+
     @Autowired
-    private BoardRepository boardRepo;
+    protected BoardServiceImpl(BoardRepository boardRepo, CommentsRepository commentsRepo) {
+        this.boardRepo = boardRepo;
+        this.commentsRepo = commentsRepo;
+    }
     //BoardRepository에 있는 DB와 연동하여 기능하는 것을 명시
 
     //클라이언트에서 받아온 Board 객체의 데이터를 BoardRepository의 상속받은 CrudRepository의
@@ -47,5 +56,13 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<Board> getBoardListByMemberId(Member member) {
         return boardRepo.findAllByMemberIdEqualsBoardWriter(member.getId());
+    }
+    @Override
+    public void insertComments(Comments comments) {
+        commentsRepo.save(comments);
+    }
+    @Override
+    public List<Comments> getAllComments(Comments comments) {
+        return commentsRepo.findCommentsByBoard_seq(comments.getBoard_seq());
     }
 }
