@@ -36,21 +36,38 @@
     </div>
   </div>
   <hr>
-  <form id="comment" th:action="@{/board/insertComment}" method="post">
-    <div>
-      <div>작성자</div>
-    </div>
-    <div>
-      <div><label>
-        <textarea name="comment" type="text" th:text="${board}"></textarea>
-      </label></div>
-    </div>
-    <div>
-      <input type="submit" value="댓글 등록">
-    </div>
-  </form>
+  <section>
+    <h3>개의 댓글</h3>
+    <form class="board_comment" th:action="@{/board/insertComment}" method="post">
+      <div>
+        <div th:text="작성자"></div>
+        <div><input name="commentid" type="text" th:placeholder="ㅇㅇ" size="30"></div>
+      </div>
+      <div>
+          <textarea name="comment" type="text"></textarea>
+      </div>
+      <div>
+        <input type="submit" value="댓글 등록">
+      </div>
+    </form>
+<hr>
+  <h4>누군가의 댓글</h4>
+  <ul>
+    <li th:each="comments : ${commentList}">
+      <div>
+        <div th:text="작성자"></div>
+        <div th:text="${comments.commentid}"></div>
+      </div>
+      <div contenteditable="false" role="textbox" aria-readonly="true" th:text="${comments.comments}"></div>
+      <div class="commenttime">
+        <div>댓글 작성 시간 : </div>
+        <div th:text="${comments.creatDate}"></div>
+        <div>댓글 수정 시간 : </div>
+        <div th:text="${comments.updateDate}"></div>
+      </div>
+    </li>
+  </ul>
+  </section>
 </main>
-
-
 </body>
 </html>

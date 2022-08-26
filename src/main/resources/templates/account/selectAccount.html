@@ -5,14 +5,15 @@
     <title>회원 찾기</title>
 </head>
 <body>
+<h1>회원 찾기</h1>
 <form th:action="@{/account/selectAccount}" method="post">
-    <table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0">
+    <table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0" th:width="500">
         <tr>
-            <td bgcolor="#add8e6" th:text="ID" width="80"></td>
+            <td bgcolor="#add8e6" th:text="ID" width="100"></td>
             <td><input name="id" type="text" th:placeholder="ID" size="50"></td>
         </tr>
         <tr>
-            <td bgcolor="#add8e6" th:text="EMAIL" width="80"></td>
+            <td bgcolor="#add8e6" th:text="EMAIL"></td>
             <td><input name="email" type="text" th:placeholder="EMAIL" size="50"></td>
         </tr>
         <tr>
@@ -22,5 +23,6 @@
         </tr>
     </table>
 </form>
+<a th:href="@{/account/getAccountList}"></a>
 </body>
 </html>

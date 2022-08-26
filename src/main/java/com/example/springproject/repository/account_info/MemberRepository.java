@@ -35,4 +35,20 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findMembesrByEmail(String keyword);
 //    @Query(value = "select m from Member m where m.email like concat('%',:email,'%')")
 //    List<Member> findByEmail(String email);
+
+    /* 8/26
+    JPA는 메서드 이름으로 DB에 조회하는 기능
+    JPQL : JPA를 통해 JPA에서 제공하는 쿼리문으로 조회 (단, 엔티티 기준으로만 조회 가능)
+    NativeQuery : 일반 SQL문으로 DB 조회하며 보통 DTO 단위로 리턴 (Entity 단위로 리턴x)
+
+    *jpql containing (SQL문의 like처럼 유사한 단어를 찾는 메서드명)
+    List<Member> findByEmailContaining(String email);
+
+    Member findAllBy 라고 할 경우 배열로 받아야 한다. List를 해주어야한다는 뜻.
+    List<Member> findAllBy
+
+
+    *jpql contians
+
+     */
 }

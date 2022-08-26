@@ -8,6 +8,7 @@ import java.util.List;
 import com.example.springproject.entity.account_info.Member;
 import com.example.springproject.entity.board.Board;
 import com.example.springproject.entity.board.Comments;
+import com.example.springproject.repository.board.CommentsRepository;
 import com.example.springproject.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/board")
 public class BoardController {
 
+    private final BoardService boardService;
+
     @Autowired
-    private BoardService boardService;
+    protected BoardController(BoardService boardService) {
+        this.boardService = boardService;
+    }
+
 
     @GetMapping("/getBoardList")
-    public String getBoardList(Model model, Board board) {
+    public String getBoardList(Model model) {
         List<Board> boardList = boardService.getBoardList();
 //        model.addAttribute("boardList", boardService.getBoardList());
         model.addAttribute("boardList", boardList);
@@ -52,8 +58,9 @@ public class BoardController {
     }
 
     @GetMapping("/getBoard")
-    public String getBoard(Board board, Model model) {
+    public String getBoard(Board board, Model model, Comments comments) {
         model.addAttribute("board", boardService.getBoard(board));
+        model.addAttribute("commentList",boardService.getComments(comments));
         return "/board/getBoard";
     }
 
@@ -106,15 +113,17 @@ public class BoardController {
 
     @PostMapping("/insertComment")
     public String insertComment(Comments comments) {
+        comments.setCreateDate(new Date());
+        comments.setUpdateDate(new Date());
         boardService.insertComments(comments);
         return "redirect:/board/getBoard";
     }
 
     //board Seq 전달하면 전체 comments를 불러오는 controller method
-    @GetMapping("/getCommentList")
-    public String getCommentsList(Comments comments, Model model) {
-        model.addAttribute("CommentsList", boardService.getAllComments(comments));
-        return "/board/getCommentList";
-    }
+//    @GetMapping("/getCommentList")
+//    public String getCommentsList(Comments comments, Model model) {
+//        model.addAttribute("CommentsList", boardService.getAllComments(comments));
+//        return "/board/getCommentList";
+//    }
 }
 

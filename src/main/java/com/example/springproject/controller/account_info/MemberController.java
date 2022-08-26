@@ -77,8 +77,8 @@ public class MemberController {
         //클라이언트에서 ID/ PW만 가지고 들어옴. 오류 날 것이다.
         //createDate
         //updateDate
-//        member.setCreateDate(new Date());
-//        member.setUpdateDate(new Date());
+        member.setCreateDate(new Date());
+        member.setUpdateDate(new Date());
 
         memberService.insertMember(member);
         return "redirect:/account/getAccountList";

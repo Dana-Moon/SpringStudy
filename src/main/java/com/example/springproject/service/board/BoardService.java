@@ -21,4 +21,7 @@ public interface BoardService {
 
     void insertComments(Comments comments);
     List<Comments> getAllComments(Comments comments);
+
+    Comments getComments(Comments comments);
+    List<Comments> getCommentsList();
 }

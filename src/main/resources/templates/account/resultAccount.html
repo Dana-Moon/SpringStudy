@@ -5,20 +5,21 @@
     <title>회원 정보 찾기</title>
 </head>
 <body>
-    <h1>회원 정보 찾기</h1>
-        <table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0">
-            <tr>
-                <td bgcolor="#add8e6" th:text="번호" width="80"></td>
-                <td th:text="${member.seq}"></td>
-            </tr>
-            <tr>
-                <td bgcolor="#add8e6" th:text="ID" width="80"></td>
-                <td th:text="${member.id}"></td>
-            </tr>
-            <tr>
-                <td bgcolor="#add8e6" th:text="email"></td>
-                <td th:text="${member.email}"></td>
-            </tr>
-        </table>
+<h1>회원 정보 결과</h1>
+    <table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0" th:width="500">
+        <tr>
+            <td bgcolor="#add8e6" th:text="번호" width="80"></td>
+            <td th:text="${member.seq}"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#add8e6" th:text="ID"></td>
+            <td th:text="${member.id}"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#add8e6" th:text="email"></td>
+            <td th:text="${member.email}"></td>
+        </tr>
+    </table>
+    <a th:href="@{/account/getAccountList}">회원 목록으로</a>
 </body>
 </html>

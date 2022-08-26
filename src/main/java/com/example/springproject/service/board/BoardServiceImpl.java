@@ -65,4 +65,18 @@ public class BoardServiceImpl implements BoardService {
     public List<Comments> getAllComments(Comments comments) {
         return commentsRepo.findCommentsByBoard_seq(comments.getBoard_seq());
     }
+
+//    @Override
+//    public Board getBoard(Board board) {
+//        return boardRepo.findById(board.getSeq()).get();
+//    }
+    @Override
+    public Comments getComments(Comments comments) {
+        return commentsRepo.findById(comments.getSeq()).get();
+    }
+
+    @Override
+    public List<Comments> getCommentsList() {
+        return (List<Comments>) commentsRepo.findAll();
+    }
 }
