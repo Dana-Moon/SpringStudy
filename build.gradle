@@ -57,7 +57,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //    implementation 'org.springframework.boot:spring-boot-devtools-tests:'
-//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //테스트용 라이브러리
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     //8/10 DB 오라클 접속에 필요한 라이브러리.
     //ojdbc8 오라클에 제공하는 라이브러리로 JAVA와 연동하기 위해 쓰임 (8버전이 19c에 활용 가능)
@@ -72,6 +74,9 @@ dependencies {
     implementation 'com.oracle.database.security:oraclepki'
     implementation 'com.oracle.database.security:osdt_core'
     implementation 'com.oracle.database.security:osdt_cert'
+
+    // 8/29 Gson 라이브러리
+    implementation 'com.google.code.gson:gson'
 
 }
 

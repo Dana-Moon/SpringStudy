@@ -1,4 +1,4 @@
-package com.example.springproject.service.account_info;
+package com.example.springproject.service.account;
 
 import com.example.springproject.entity.account_info.Member;
 
@@ -41,7 +41,7 @@ public interface MemberService {
 //
 //    //2,5조
 //    //민감데이터 (SHA256...?)
-//    List<Member> getMemberListEncodingByMemberList(List<Member> memberList);
+    List<Member> getMemberListEncodingByMemberList(List<Member> memberList);
 //
 //    //작성자의 모든 게시글 출력
 //    List<Member> getBoardListAllBoardByMemberId(Member member);

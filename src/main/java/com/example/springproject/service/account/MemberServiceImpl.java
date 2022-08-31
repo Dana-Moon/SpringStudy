@@ -1,7 +1,8 @@
-package com.example.springproject.service.account_info;
+package com.example.springproject.service.account;
 
 import com.example.springproject.entity.account_info.Member;
 import com.example.springproject.repository.account_info.MemberRepository;
+import com.example.springproject.service.encrypt.EncryptAES256;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,12 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepo;
 
+    private final EncryptAES256 encryptAES256;
+
     @Autowired
-    protected MemberServiceImpl(MemberRepository memberRepo) {
+    protected MemberServiceImpl(MemberRepository memberRepo, EncryptAES256 encryptAES256) {
         this.memberRepo = memberRepo;
+        this.encryptAES256 = encryptAES256;
     }
 
     //(List<Member>) : 뒤에 있는 결과값을 형변환
@@ -100,4 +104,15 @@ public class MemberServiceImpl implements MemberService{
         return memberRepo.findMembesrByEmail(keyword);
     }
 
+    @Override
+    public List<Member> getMemberListEncodingByMemberList(List<Member> memberList) {
+        for (Member member : memberList) {
+            try {
+                member.setPassword(encryptAES256.encrypt(member.getPassword()));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return memberList;
+    }
 }

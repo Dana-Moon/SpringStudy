@@ -23,6 +23,8 @@
     <input class="col title" name="title" type="text" th:placeholder="제목" th:value="${board == null ? '' : board.title}">
   </div>
   <textarea class="content" name="content" th:rows="20" th:placeholder="내용" th:text="${board == null ? '' : board.content}"></textarea>
+
+
   <div class="row between">
     <label th:if="${board == null}" class="row label writer"><input name="writer" type="text"></label>
     <div th:unless="${board == null}" class="row label writer" th:text="${board.writer}"></div>
@@ -31,5 +33,18 @@
     </div>
   </div>
 </form>
+
+<form th:action="@{/board/uploadFile}" method="post" enctype="multipart/form-data">
+  <!--    multipartUpload 객체를 사용하여 서버에 데이터를 전달
+          input tag의 타입이 file로 지정하여 전달
+          name이 uploadfile로 requestParam에 동일한 매개변수를 가져야 함.-->
+  <input name="id" type="hidden" th:value="aaa">
+  <input type="file" name="uploadfile" multiple="multiple">
+  <input type="submit" value="데이터 전송">
+</form>
+
+<hr>
+<!--/board/image는 GetMapping 이다.-->
+<img src="/board/img/">
 </body>
 </html>

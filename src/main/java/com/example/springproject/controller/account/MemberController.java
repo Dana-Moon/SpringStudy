@@ -1,7 +1,7 @@
-package com.example.springproject.controller.account_info;
+package com.example.springproject.controller.account;
 
 import com.example.springproject.entity.account_info.Member;
-import com.example.springproject.service.account_info.MemberService;
+import com.example.springproject.service.account.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,6 +100,15 @@ public class MemberController {
         return "/account/getAccountList";
     }
 
+    // 8/22 수업 내용 8/29 추가함
+    /*
+    @GetMapping("/getAccountList")
+    public String getAccountList(Model model) {
+        model.addAttribute("memberList", memberService.getMemberListEncodingByMemberList(memberService.getMemberList()));
+        return "/account/getAccountList";
+    }
+     */
+
     //회원정보 상세보기
     @GetMapping("/getAccount")
     public String getAccount(Member member, Model model) {
@@ -147,8 +156,8 @@ public class MemberController {
    /* +회원정보를 1개의 테이블에서 관리하지 않는다. > 회원정보가 누적이 되면, 1년 이상 로그인을 안한 장기 휴식회원들이 생긴다.
     1년 미접속 계정은 따로 테이블에 옮겨서 저장 (예전 스타일)
     날짜별로 (로그인 한 지) 1년이 지나면 새로 테이블을 생성해서 회원을 관리합니다. (회원가입한 날짜)
-     > 최신회원들을 관리하는 마케팅부서에게 도움됨
-     > DB 백업할 때도 테이블 파편화로 트랜잭션 위험 또는 시간 절약
+     > 장점1: 최신회원들을 관리하는 마케팅부서에게 도움됨
+     > 장점2: DB 백업할 때도 테이블 파편화로 트랜잭션 위험 또는 시간 절약
      > 단점 : Admin(관리자)는 모든 회원정보를 볼 때, 다수의 테이블을 동시에 봐야 하기 때문에 JOIN을 써서 속도를 느림
     */
 
