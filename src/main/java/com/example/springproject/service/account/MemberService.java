@@ -1,6 +1,6 @@
 package com.example.springproject.service.account;
 
-import com.example.springproject.entity.account_info.Member;
+import com.example.springproject.entity.account.Member;
 
 import java.util.List;
 

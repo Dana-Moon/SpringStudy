@@ -1,10 +1,12 @@
 package com.example.springproject.service.board;
 
-import com.example.springproject.entity.account_info.Member;
+import com.example.springproject.entity.account.Member;
 import com.example.springproject.entity.board.Board;
 import com.example.springproject.entity.board.Comments;
+import com.example.springproject.entity.data.FileUploadEntity;
 import com.example.springproject.repository.board.BoardRepository;
 import com.example.springproject.repository.board.CommentsRepository;
+import com.example.springproject.repository.board.FileUploadInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +20,13 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepo;
     private final CommentsRepository commentsRepo;
 
+    private final FileUploadInfoRepository fileUploadInfoRepo;
+
     @Autowired
-    protected BoardServiceImpl(BoardRepository boardRepo, CommentsRepository commentsRepo) {
+    protected BoardServiceImpl(BoardRepository boardRepo, CommentsRepository commentsRepo, FileUploadInfoRepository fileUploadInfoRepo) {
         this.boardRepo = boardRepo;
         this.commentsRepo = commentsRepo;
+        this.fileUploadInfoRepo = fileUploadInfoRepo;
     }
     //BoardRepository에 있는 DB와 연동하여 기능하는 것을 명시
 
@@ -30,10 +35,13 @@ public class BoardServiceImpl implements BoardService {
     public List<Board> getBoardList() {
         return (List<Board>) boardRepo.findAll();
     }
+
+    // 9/1 전까지는 void로 만들어서 진행함. 9/1에 BoardController에 insertBoard 수정하면서 Long 타입으로 변경. boardRepo.save(board).getseq();해줌
     @Override
-    public void insertBoard(Board board) {
-        boardRepo.save(board);
+    public Long insertBoard(Board board) {
+        return boardRepo.save(board).getSeq();
     }
+
     @Override
     public Board getBoard(Board board) {
         return boardRepo.findById(board.getSeq()).get();
@@ -78,5 +86,21 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<Comments> getCommentsList() {
         return (List<Comments>) commentsRepo.findAll();
+    }
+
+    @Override
+    public Long insertFileUploadEntity(FileUploadEntity fileUploadEntity) {
+        return fileUploadInfoRepo.save(fileUploadEntity).getId();
+    }
+
+    //이 구조를 이해하는 것이 중요하다. id를 가져와서 다른 테이블에서 사용할 수 있는(?) 그런 관계를 위해 아래외 같은 식이 필요하다.
+    @Override
+    public FileUploadEntity getFileUploadEntity(String board_seq) {
+        return fileUploadInfoRepo.findByBoardSeq(Long.parseLong(board_seq));
+    }
+
+    @Override
+    public FileUploadEntity getFileUploadEntity2(Long board_seq) {
+        return fileUploadInfoRepo.
     }
 }

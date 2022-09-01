@@ -8,17 +8,17 @@ import java.util.List;
 import java.util.UUID;
 
 //외장 라이브러리 호출(import), gradle로 설치한 라이브러리
-import com.example.springproject.entity.account_info.Member;
+import com.example.springproject.entity.account.Member;
 import com.example.springproject.entity.board.Board;
 import com.example.springproject.entity.board.Comments;
 import com.example.springproject.entity.data.FileUploadEntity;
-import com.example.springproject.repository.board.CommentsRepository;
 import com.example.springproject.service.board.BoardService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,22 +52,75 @@ public class BoardController {
         return "/board/insertBoard";
     }
 
+    // 9/1까지 PostMapping("/insertBoard") 쓰다가 아래 메서드로 바꿈
+    /*
     @PostMapping("/insertBoard")
     public String insertBoard(Board board) {
         board.setCreateDate(new Date());
 
-        /*클라이언트에서 board 객체를 받아서 매개변수로 사용
-         * [1]BoardService의 insertBoard 메서드 실행
-         * [2]BoardRepository(CrudRepository).save(board)를 통해서 (JPA번역)
-         * DB의 저장(SQL)
-         * insertBoard라는 메서드에 board객체 인자값으로 넣기
-         * */
+         //클라이언트에서 board 객체를 받아서 매개변수로 사용
+         //[1]BoardService의 insertBoard 메서드 실행
+         //[2]BoardRepository(CrudRepository).save(board)를 통해서 (JPA번역)
+         //DB의 저장(SQL)
+         //insertBoard라는 메서드에 board객체 인자값으로 넣기
+
         boardService.insertBoard(board);
+        return "redirect:/board/getBoardList";
+        }
+     */
+
+
+    // 9/1 변경
+    @PostMapping("/insertBoard")
+    public String insertBoard(Board board, @Nullable@RequestParam("uploadfile")MultipartFile[] uploadfile) {
+        //@Nullable@Requestparam("uploadfile")MultipartFile[] :
+        //MultipartFile을 클라이언트에서 받아오고, 데이터가 없더로 허용 (@Nullable)
+        try {
+            //boardService.insertBoard 메서드에서는 DB에 데이터를 저장하고 저장된 board_seq를 리턴 받음 (Long 타입)
+            Long board_seq = boardService.insertBoard(board);
+            List<FileUploadEntity> list = new ArrayList<>();
+            for (MultipartFile file : uploadfile) {
+                if(!file.isEmpty()) {
+                    FileUploadEntity entity = new FileUploadEntity(null,
+                            UUID.randomUUID().toString(),
+                            file.getContentType(),
+                            file.getName(),
+                            file.getOriginalFilename(),
+                            board_seq);
+                    boardService.insertFileUploadEntity(entity);
+                    list.add(entity);
+                    File newFileName = new File(entity.getUuid()+"_"+entity.getOriginalFilename());
+                    file.transferTo(newFileName);
+                }
+            }
+
+            List<FileUploadEntity> list = new ArrayList<>();
+            for (MultipartFile file : uploadfile) {
+                //MultipartFile로 클라이언트에서 온 데이터가 무결성 조건에 성립을 안하거나 메타데이터가 없거나 문제가 생길 여지를 if문으로 처리
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "redirect:/board/getBoardList";
     }
 
+    // 9/1일 전까지 쓰다가, 아래 GetMapping(getBoard) 메서드로 바꿈.
+    // Comments comments 쓰고 싶었으나 못 씀 ㅠ.
+    /* @GetMapping("/getBoard")
+    public String getBoard(Board board, Model model) {
+        model.addAttribute("board", boardService.getBoard(board));
+//        model.addAttribute("commentList",boardService.getComments(comments));
+        return "/board/getBoard";
+    }
+    */
+
+    // 9/1 변경.
     @GetMapping("/getBoard")
     public String getBoard(Board board, Model model) {
+
+        FileUploadEntity fileUploadEntity = boardService.getFileUploadEntity_Long(board.getSeq());
+        String path = "/board/image" + fileUploadEntity.getUuid() + "_" + fileUploadEntity.
+
         model.addAttribute("board", boardService.getBoard(board));
 //        model.addAttribute("commentList",boardService.getComments(comments));
         return "/board/getBoard";
@@ -149,8 +202,15 @@ public class BoardController {
     springboot에서 URL주소를 통해 이미지를 받음. InputStream을 통해 파일을 http 프로토콜에 전달하여 클라이언트에게 전송.
      */
 
+    // 8/31 만들어 보는 수업 시간 가짐. -> 9/1일 엎음.
+    /*
+    file upload 만들어보던 것. insertBoard일 때 보이는 메소드로 만들어짐. uploadFile과 그 아래 viewImage 메서드가 그러함. 그리고 지움
+
     @PostMapping("/uploadFile")
-    public String uploadFile(@RequestParam("uploadfile")MultipartFile[] uploadfile) throws IOException {
+    public String uploadFile(@RequestParam("uploadfile")MultipartFile[] uploadfile,
+                             @RequestParam("writer") String input_writer) throws IOException {
+        //@RequestParam("writer") = 클라이언트 html의 input tag의 name(key값)인 writer를 controller에서 매개변수 String input_writer로 전달
+        log.info(input_writer);
         //MultipartFile을 클라이언트에서 서버로 RequestParam 데이터를 받아옴. name = uploadfile
         System.out.println("test");
         //@Slf4j Lombok 라이브러리로 log 데이터 찍음
@@ -161,14 +221,21 @@ public class BoardController {
         for (MultipartFile file : uploadfile) {
             //MultipartFile file이 있을 때까지 작업 진행
             if(!file.isEmpty()) {
-                FileUploadEntity dto = new FileUploadEntity(null,
+                //MultipartFile의 정보를 dto(entity)에 저장
+                //file.get~ 메서드는 MultipartFile (이미지) 내부에 있는 메타데이터를 가져오는 메서드
+                //input_writer는 클라이언트에서 데이터를 직접 전달하는 string 데이터
+                FileUploadEntity entity = new FileUploadEntity(null,
                         UUID.randomUUID().toString(),
                         file.getContentType(),
                         file.getName(),
-                        file.getOriginalFilename());
-                list.add(dto);
+                        file.getOriginalFilename(),
+                        input_writer);
+                Long output = boardService.insertFileUploadEntity(entity);
+                log.info("seq check!");
+                log.info(output.toString());
+                list.add(entity);
                 //File은 java io이다.
-                File newFileName = new File(dto.getUuid()+"_"+dto.getName()+".png");
+                File newFileName = new File(entity.getUuid()+"_"+entity.getName()+".png");
                 //file을 서버에 저장하는 스트림 행위는 서버가 성공할지 여부를 체크하므로 exception 처리 필요
                 //메서드에 throws IOException 처리 = try catch 처리 필요
                 file.transferTo(newFileName);
@@ -179,21 +246,51 @@ public class BoardController {
     }
 
     //중괄호 안에 이름은 자기가 하고 싶은대로 지으면 된다.
-    @GetMapping("/viewImage/{imgname}")
+    @GetMapping("/image/{imgname}")
     public ResponseEntity<byte[]> viewImage(@PathVariable("imgname")String input_imgName) throws IOException {
         //ResponseEntity : http프로토콜을 통해서 byte 데이터를 전달하는 객체 (byte 배열로 전달.), byte(소문자 = 기본타입. 대문자로 시작하는 것은 참조타입이다.)
         //@PathVariable : URL 주소의 값을 받아옴.
         //InputStream 클라이언트에게 전송하는 규칙을 java io를 통해 정의하고 있다.
-        String path = "C:\\\\\\\\Users\\\\\\\\user\\\\\\\\Desktop\\\\\\\\Coding\\\\\\\\spring\\\\\\\\SpringProject_version 2\\\\\\\\src\\\\\\\\main\\\\\\\\resources\\\\\\\\static\\\\\\\\upload"+input_imgName;
+        String path = "C:\\\\Users\\\\user\\\\Desktop\\\\Coding\\\\spring\\\\SpringProject_version 2\\\\src\\\\main\\\\resources\\\\static\\\\upload"+input_imgName;
         //데이터(이미지)를 전송하기 위한 객체로서 java에서는 항상 데이터를 스트림타입으로 전달
-        InputStream inputStream = new FileInputStream(path);
+//        InputStream inputStream = new FileInputStream(path);
         //데이터를 잘라서 가져오기 때문에, 가져오는 중간에 문제가 생길 수도 있다. 그런데 그 때에 예외처리를 안하면 롤백을 해야하므로, 예외처리를 꼭 명시해주어야 한다.
-        byte[] imgByteArr = toByteArray(inputStream);
-        inputStream.close();
-
+//        byte[] imgByteArr = toByteArray(inputStream);
+//        inputStream.close();
+//
         //자원은 꼭 닫아주기!!
         //ResponseEntity를 통해 http프로토콜로 클라이언트에게 데이터 전송
+//        return new ResponseEntity<byte[]>(imgByteArr, HttpStatus.OK);
+        FileInputStream fis = new FileInputStream(path); // 원본 파일 명
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        byte[] imgByteArr = bis.readAllBytes();
+        //ResponseEntity를 통해 http프로토콜로 클라이언트에게 데이터 전송
         return new ResponseEntity<byte[]>(imgByteArr, HttpStatus.OK);
+
+    }
+    */
+
+    // 9/1 추가
+    @GetMapping(value = "/image/{imagename}", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> imageLoading(@PathVariable("imagename")String imagename) throws IOException {
+        //ResponseEntity<byte[]> : 메서드 리턴타입으로 이미지 데이터를 송신하기 위한 객체<바이트 배열>
+        //throws IOException : 스트림방식으로 데이터를 전송할 때, 도중에 오류가 날 경우를 찾기 위해서 선언한 Exception
+
+        String path = "";
+        //File을 컴퓨터가 이해하기 위해서 Stream 배열을 만들어서 작업
+        //객체(데이터 저장) : String, int, double
+        //Stream객체는 파일을 컴퓨터가 cpu에서 바로 읽어들일 수 있도록 하는 객체
+        FileInputStream fis = new FileInputStream(path);
+        //Buffered : CPU에서 데이터 읽어올 때 메모리와 캐시 사이에서 CPU와의 속도 차이를 줄이기 위한 중간 저장 위치
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        //byte배열로 전환하여 ResponseEntity를 통해 클라이언트에게 데이터 전달 (메모리만큼 빠르다..?)
+        //HTTP 프로토콜은 바이트 단위(배열)로 데이터를 주고 받음
+
+        byte[] imgByteArr = bis.readAllBytes();
+
+
+        InputStream imageStream = new FileInputStream("");
+
     }
 
 }

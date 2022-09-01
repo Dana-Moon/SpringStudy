@@ -1,7 +1,7 @@
 package com.example.springproject.service.account;
 
-import com.example.springproject.entity.account_info.Member;
-import com.example.springproject.repository.account_info.MemberRepository;
+import com.example.springproject.entity.account.Member;
+import com.example.springproject.repository.account.MemberRepository;
 import com.example.springproject.service.encrypt.EncryptAES256;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;

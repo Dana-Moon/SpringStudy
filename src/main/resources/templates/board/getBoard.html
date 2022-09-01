@@ -35,6 +35,16 @@
       </form>
     </div>
   </div>
+    <img th:src="@{${test}}">
+  <hr>
+    <form th:action="@{/board/uploadFile}" method="post" enctype="multipart/form-data">
+      <!--    multipartUpload 객체를 사용하여 서버에 데이터를 전달
+              input tag의 타입이 file로 지정하여 전달
+              name이 uploadfile로 requestParam에 동일한 매개변수를 가져야 함.-->
+      <input type="file" name="uploadfile" multiple="multiple">
+      <input name="writer" type="hidden" th:value="${board.writer}">
+      <input type="submit" value="데이터 전송">
+    </form>
   <hr>
   <section>
     <h3>개의 댓글</h3>

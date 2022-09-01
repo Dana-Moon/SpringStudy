@@ -3,14 +3,13 @@ package com.example.springproject.entity.board;
 
 
 //외장 라이브러리(gradle로 다운로드)
-import com.example.springproject.entity.account_info.Member;
+import com.example.springproject.entity.account.Member;
 import com.example.springproject.entity.base.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 //롬복에 있는 Getter라는 메서드를 통해 하단에 있는 클래스 Board는 자동으로 getter, setter 메서드가 생성됨을 암시함.

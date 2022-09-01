@@ -1,6 +1,6 @@
 package com.example.springproject.entity.board;
 
-import com.example.springproject.entity.account_info.Member;
+import com.example.springproject.entity.account.Member;
 import com.example.springproject.entity.base.BaseTimeEntity;
 import lombok.Getter;
 import lombok.Setter;

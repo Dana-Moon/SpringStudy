@@ -1,6 +1,6 @@
 package com.example.springproject.controller.account;
 
-import com.example.springproject.entity.account_info.Member;
+import com.example.springproject.entity.account.Member;
 import com.example.springproject.service.account.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

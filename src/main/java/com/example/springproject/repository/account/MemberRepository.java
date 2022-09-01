@@ -1,6 +1,6 @@
-package com.example.springproject.repository.account_info;
+package com.example.springproject.repository.account;
 
-import com.example.springproject.entity.account_info.Member;
+import com.example.springproject.entity.account.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

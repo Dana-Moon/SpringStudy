@@ -1,4 +1,4 @@
-package com.example.springproject.entity.account_info;
+package com.example.springproject.entity.account;
 
 import com.example.springproject.entity.base.BaseTimeEntity;
 import com.example.springproject.entity.board.Board;
@@ -9,7 +9,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 // 8/12

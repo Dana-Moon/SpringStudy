@@ -13,7 +13,7 @@
   <a th:if="${board == null}" class="btn back fl" th:href="@{/board/getBoardList}"></a>
   <a th:unless="${board == null}" class="btn back fl" th:href="@{/board/getBoard(seq=${board.seq})}"></a>
 </header>
-<form id="write" th:action="|/board/${board == null ? 'insertBoard' : 'updateBoard'}|" method="post">
+<form id="write" th:action="|/board/${board == null ? 'insertBoard' : 'updateBoard'}|" method="post" enctype="multipart/form-data">
   <input th:if="${board} != null" type="hidden" name="seq" th:value="${board.seq}">
   <div class="row">
     <select class="col category">
@@ -23,8 +23,6 @@
     <input class="col title" name="title" type="text" th:placeholder="제목" th:value="${board == null ? '' : board.title}">
   </div>
   <textarea class="content" name="content" th:rows="20" th:placeholder="내용" th:text="${board == null ? '' : board.content}"></textarea>
-
-
   <div class="row between">
     <label th:if="${board == null}" class="row label writer"><input name="writer" type="text"></label>
     <div th:unless="${board == null}" class="row label writer" th:text="${board.writer}"></div>
@@ -32,19 +30,8 @@
       <button class="btn write fl" th:classappend="${board} != null ? 'update':''" type="submit" onclick="this.submit()"></button>
     </div>
   </div>
-</form>
-
-<form th:action="@{/board/uploadFile}" method="post" enctype="multipart/form-data">
-  <!--    multipartUpload 객체를 사용하여 서버에 데이터를 전달
-          input tag의 타입이 file로 지정하여 전달
-          name이 uploadfile로 requestParam에 동일한 매개변수를 가져야 함.-->
-  <input name="id" type="hidden" th:value="aaa">
   <input type="file" name="uploadfile" multiple="multiple">
-  <input type="submit" value="데이터 전송">
+<!--  스프링 구조상 뻑 날 수 있어서, img 태그의 alt방식처럼 controller를 다녀가며 비동기 유사방식으로 사진이 나타날 수 있도록 설정함.-->
 </form>
-
-<hr>
-<!--/board/image는 GetMapping 이다.-->
-<img src="/board/img/">
 </body>
 </html>
