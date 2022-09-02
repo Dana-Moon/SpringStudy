@@ -80,6 +80,7 @@ public class BoardController {
             Long board_seq = boardService.insertBoard(board);
             List<FileUploadEntity> list = new ArrayList<>();
             for (MultipartFile file : uploadfile) {
+                //MultipartFile로 클라이언트에서 온 데이터가 무결성 조건에 성립을 안하거나 메타데이터가 없거나 문제가 생길 여지를 if문으로 처리
                 if(!file.isEmpty()) {
                     FileUploadEntity entity = new FileUploadEntity(null,
                             UUID.randomUUID().toString(),
@@ -92,11 +93,6 @@ public class BoardController {
                     File newFileName = new File(entity.getUuid()+"_"+entity.getOriginalFilename());
                     file.transferTo(newFileName);
                 }
-            }
-
-            List<FileUploadEntity> list = new ArrayList<>();
-            for (MultipartFile file : uploadfile) {
-                //MultipartFile로 클라이언트에서 온 데이터가 무결성 조건에 성립을 안하거나 메타데이터가 없거나 문제가 생길 여지를 if문으로 처리
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,11 +114,11 @@ public class BoardController {
     @GetMapping("/getBoard")
     public String getBoard(Board board, Model model) {
 
-        FileUploadEntity fileUploadEntity = boardService.getFileUploadEntity_Long(board.getSeq());
-        String path = "/board/image" + fileUploadEntity.getUuid() + "_" + fileUploadEntity.
+        FileUploadEntity fileUploadEntity = boardService.getFileUploadEntity_long(board.getSeq());
+        String path = "/board/image" + fileUploadEntity.getUuid() + "_" + fileUploadEntity.getOriginalFilename();
 
         model.addAttribute("board", boardService.getBoard(board));
-//        model.addAttribute("commentList",boardService.getComments(comments));
+        model.addAttribute("test", path+"/filer");
         return "/board/getBoard";
     }
 
@@ -271,12 +267,12 @@ public class BoardController {
     */
 
     // 9/1 추가
-    @GetMapping(value = "/image/{imagename}", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> imageLoading(@PathVariable("imagename")String imagename) throws IOException {
+    @GetMapping(value = "/image/{imgname}", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> imageLoading(@PathVariable("imgname")String imgname) throws IOException {
         //ResponseEntity<byte[]> : 메서드 리턴타입으로 이미지 데이터를 송신하기 위한 객체<바이트 배열>
         //throws IOException : 스트림방식으로 데이터를 전송할 때, 도중에 오류가 날 경우를 찾기 위해서 선언한 Exception
 
-        String path = "";
+        String path = "C:\\Users\\user\\Desktop\\Coding\\spring\\SpringProject_version 2\\src\\main\\resources\\static\\upload\\"+imgname;
         //File을 컴퓨터가 이해하기 위해서 Stream 배열을 만들어서 작업
         //객체(데이터 저장) : String, int, double
         //Stream객체는 파일을 컴퓨터가 cpu에서 바로 읽어들일 수 있도록 하는 객체
@@ -285,12 +281,10 @@ public class BoardController {
         BufferedInputStream bis = new BufferedInputStream(fis);
         //byte배열로 전환하여 ResponseEntity를 통해 클라이언트에게 데이터 전달 (메모리만큼 빠르다..?)
         //HTTP 프로토콜은 바이트 단위(배열)로 데이터를 주고 받음
-
         byte[] imgByteArr = bis.readAllBytes();
+        //ResponseEntity를 통해 http 프로토콜로 클라이언트에게 데이터 전송
 
-
-        InputStream imageStream = new FileInputStream("");
-
+        return new ResponseEntity<byte[]>(imgByteArr, HttpStatus.OK);
     }
 
 }

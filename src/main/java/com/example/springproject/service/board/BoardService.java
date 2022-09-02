@@ -30,5 +30,5 @@ public interface BoardService {
 
     public FileUploadEntity getFileUploadEntity(String board_seq);
 
-    public FileUploadEntity getFileUploadEntity2(Long board_seq);
+    public FileUploadEntity getFileUploadEntity_long(Long board_seq);
 }
