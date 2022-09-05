@@ -1,7 +1,7 @@
 package com.example.springproject;
 
 import com.example.springproject.entity.account.Member;
-import com.example.springproject.service.apiTest.ApiTest;
+import com.example.springproject.service.openAPI.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ class SpringProjectApplicationTests {
 
     //생성자 주입 방식이 에러를 뿜을 거라, 필드 생성 방식으로 만듦.
     @Autowired
-    ApiTest apitest_1;
+    PublicAPI apitest_1;
 
 
     @Test
